@@ -1,0 +1,30 @@
+<main class="w-full h-screen">
+    <section class="h-screen flex justify-center items-center">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-[28em] border-2 p-4">
+            <div class="text-center p-4 mb-4">
+                <h2 class="lg:text-2xl md:text-xl text-md">Register</h2>
+            </div>
+            <div class="grid gap-6">
+                <div class="text-center flex justify-between mb-2">
+                    <input formControlName="name" type="text" class="border-2 rounded p-2" placeholder="Nom">
+                    <input formControlName="surname" type="text" class="border-2 rounded p-2" placeholder="Prenom">
+                </div>
+                <div class="mb-2">
+                    <input formControlName="email" type="email" class="border-2 rounded p-2 w-full" placeholder="Email">
+                </div>
+                <div class="mb-2">
+                    <input formControlName="password" type="password" class="border-2 rounded p-2 w-full" placeholder="Password">
+                </div>
+                <div class="mb-2">
+                    <input formControlName="age" type="number" min="0" class="border-2 rounded p-2 w-full select-none" value="18" max="120" placeholder="age">
+                </div>
+                <div class="px-2">
+                    <h2>Already have an account? sign-in <a href="auth/login" class="hover:underline text-blue-600">here</a></h2>
+                </div>
+                <div class="text-center p-4">
+                    <button type="submit" class="bg-blue-800 py-2 px-4 rounded text-white hover:bg-blue-900 transition-all">sign-up</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
