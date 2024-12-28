@@ -5,7 +5,8 @@ export interface Login {
 
 export interface LoginSuccess {
     token: string;
-    refresh_token: string;
+    refreshToken: string;
+    expirationDate: string;
 };
 
 export interface LoginFailed {

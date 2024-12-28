@@ -1,4 +1,4 @@
-import { HttpClient, HttpContext, HttpContextToken, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { DestroyRef, Injectable, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -6,13 +6,13 @@ import { catchError, EMPTY, Observable, tap } from 'rxjs';
 import { User } from './interfaces/user';
 import { Login, LoginResponse, LoginSuccess } from './interfaces/login';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IS_PUBLIC } from './auth.interceptor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private static readonly LOCALHOST = "http://localhost:8081";
-  private static CONTENT_TYPE = "application/json";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
   private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
 
@@ -28,7 +28,7 @@ export class AuthService {
 
   register(data: any): Observable<any> {
     
-    return this.http.post<LoginResponse>(AuthService.LOCALHOST+"/auth/register", data, )
+    return this.http.post<LoginResponse>(AuthService.LOCALHOST+"/auth/register", data)
     .pipe(
       catchError(error => {
         if (error.status === 409) {
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   login (data: Login): Observable<any> {
-    return this.http.post(AuthService.LOCALHOST+"/auth/login", data, )
+    return this.http.post(AuthService.LOCALHOST+"/auth/login", data, this.CONTEXT)
       .pipe(
         catchError(error => {
         if (error.status === 401) {
@@ -53,6 +53,7 @@ export class AuthService {
       }),
       tap(data => {
         const loginSuccessData = data as LoginSuccess;
+        console.log(loginSuccessData);
         this.stockTokens(loginSuccessData);
         this.router.navigate(['/']);
       })
@@ -64,13 +65,15 @@ export class AuthService {
     if (refresh_token) {
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
+      localStorage.removeItem('expiration_date');
     }
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   stockTokens (data: LoginSuccess): void {
     localStorage.setItem('token', data.token);
-    localStorage.setItem('refresh_token', data.refresh_token);
+    localStorage.setItem('refresh_token', data.refreshToken);
+    localStorage.setItem('expiration_date', data.expirationDate);
   }
 
   refreshToken(): Observable<LoginResponse | null> {
@@ -91,6 +94,10 @@ export class AuthService {
       );
   }
 
+  isAuthenticated(): boolean {
+    return !this.jwtHelper.isTokenExpired();
+  }
+
   scheduleTokenRefresh(token: string): void {
     const expirationTime = this.jwtHelper.getTokenExpirationDate(token)?.getTime();
     const refreshTime = expirationTime ? expirationTime - this.TOKEN_EXPIRY_THRESHOLD_MINUTES * 60 * 1000 : Date.now();
@@ -105,5 +112,3 @@ export class AuthService {
     }
   }
 }
-
-export const IS_PUBLIC = new HttpContextToken(() => false);
