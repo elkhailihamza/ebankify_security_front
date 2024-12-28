@@ -12,7 +12,7 @@ import { IS_PUBLIC } from './auth.interceptor';
   providedIn: 'root'
 })
 export class AuthService {
-  private static readonly LOCALHOST = "http://localhost:8081";
+  private static readonly LOCALHOST = "http://localhost:8082";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
   private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
 
@@ -55,7 +55,7 @@ export class AuthService {
         const loginSuccessData = data as LoginSuccess;
         console.log(loginSuccessData);
         this.stockTokens(loginSuccessData);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       })
     )
   }
