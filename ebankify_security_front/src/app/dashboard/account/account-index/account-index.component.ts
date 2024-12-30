@@ -1,0 +1,42 @@
+import { Component } from '@angular/core';
+import { AccountService } from '../account.service';
+import { Router } from '@angular/router';
+import { AccountDetails, CreateAccount } from '../../interfaces/account';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-account-index',
+  templateUrl: './account-index.component.html',
+  styleUrl: './account-index.component.css'
+})
+export class AccountIndexComponent {
+  accounts: AccountDetails[] = [];
+  createForm: FormGroup;
+
+  constructor(private account: AccountService, private formBuilder: FormBuilder) {
+    this.createForm = this.formBuilder.group({
+      customName: '',
+    });
+  }
+
+  ngOnInit(): void {
+    this.account.viewOwnAccounts().subscribe(
+      (data) => {
+        this.accounts = data as AccountDetails[];
+      }
+    );
+  }
+
+  createAccount() {
+    const data = this.createForm.value as CreateAccount;
+    this.account.createAccount(data).subscribe(
+      (res) => {
+        this.createForm.reset();
+        this.accounts.push(res);
+      }
+    );
+  }
+
+  deleteAccount() {
+  }
+}

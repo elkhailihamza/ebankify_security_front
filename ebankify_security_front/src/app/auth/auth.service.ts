@@ -53,7 +53,6 @@ export class AuthService {
       }),
       tap(data => {
         const loginSuccessData = data as LoginSuccess;
-        console.log(loginSuccessData);
         this.stockTokens(loginSuccessData);
         this.router.navigate(['/dashboard']);
       })

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountComponent } from './account/account.component';
 import { roleGuard } from '../auth/role.guard';
 
 const routes: Routes = [
@@ -9,10 +8,8 @@ const routes: Routes = [
     loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
   },
   {
-    path: 'accounts',
-    children: [
-      {path: '', component: AccountComponent}
-    ],
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
     canActivate: [roleGuard],
   }
 ];

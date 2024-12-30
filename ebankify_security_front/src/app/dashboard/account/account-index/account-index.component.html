@@ -1,0 +1,52 @@
+<section>
+    <div class="relative overflow-x-auto" *ngIf="accounts.length > 0; else noAccounts">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Account number
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Custom Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Balance
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Controls
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b" *ngFor="let account of accounts">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        {{ account.accountNumber }}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ account.customName }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ account.balance }} dh
+                    </td>
+                    <td class="px-6 py-4">
+                        <form (ngSubmit)="deleteAccount()">
+                            
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #noAccounts>
+        <p>No accounts available.</p>
+    </ng-template>
+    
+    <form [formGroup]="createForm" (ngSubmit)="createAccount()">
+        <input formControlName="customName" placeholder="custom name" />
+        <button type="submit" class="p-2 bg-gray-500">Create new account</button>
+    </form>
+    
+  </section>
+
+  
+
