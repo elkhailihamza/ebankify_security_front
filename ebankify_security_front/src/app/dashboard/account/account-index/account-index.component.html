@@ -29,8 +29,8 @@
                         {{ account.balance }} dh
                     </td>
                     <td class="px-6 py-4">
-                        <form (ngSubmit)="deleteAccount()">
-                            
+                        <form (ngSubmit)="deleteAccount({ accountNumber: account.accountNumber})">
+                            <button type="submit" class="bg-red-600 text-white p-2 rounded">delete</button>
                         </form>
                     </td>
                 </tr>

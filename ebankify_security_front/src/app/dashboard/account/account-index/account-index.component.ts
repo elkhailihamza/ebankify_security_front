@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
-import { AccountDetails, CreateAccount } from '../../interfaces/account';
+import { AccountDetails, CreateAccount, SelectAccount } from '../../interfaces/account';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class AccountIndexComponent {
   accounts: AccountDetails[] = [];
   createForm: FormGroup;
+  accountNumber: string = '';
 
   constructor(private account: AccountService, private formBuilder: FormBuilder) {
     this.createForm = this.formBuilder.group({
@@ -37,6 +38,11 @@ export class AccountIndexComponent {
     );
   }
 
-  deleteAccount() {
+  deleteAccount(data: SelectAccount) {
+    this.account.deleteAccount(data).subscribe(
+      () => {
+        window.location.reload();
+      }
+    )
   }
 }

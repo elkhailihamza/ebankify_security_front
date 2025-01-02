@@ -14,8 +14,11 @@
                 <div class="px-2">
                     <h2>Don't have an account? sign-up <a href="auth/register" class="hover:underline text-blue-600">here</a></h2>
                 </div>
-                <div class="text-center p-4">
-                    <button type="submit" class="bg-blue-800 py-2 px-4 rounded text-white hover:bg-blue-900 transition-all">sign-in</button>
+                <div class="text-center flex justify-center p-4">
+                    <div class="w-10 h-10" *ngIf="isLoading">
+                        <img src="assets/public/loading.svg">
+                    </div>
+                    <button type="submit" *ngIf="!isLoading" class="bg-blue-800 py-2 px-4 rounded text-white hover:bg-blue-900 transition-all">sign-in</button>
                 </div>
             </div>
         </form>

@@ -15,6 +15,7 @@ export class AuthService {
   private static readonly LOCALHOST = "http://localhost:8082";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
   private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
+  isLoading = false;
 
   constructor(private readonly http: HttpClient, 
     private readonly router: Router, 
@@ -27,33 +28,38 @@ export class AuthService {
   }
 
   register(data: any): Observable<any> {
-    
+    this.isLoading = true;
     return this.http.post<LoginResponse>(AuthService.LOCALHOST+"/auth/register", data)
     .pipe(
       catchError(error => {
         if (error.status === 409) {
           console.log("Email already in use");
         }
+        this.isLoading = false;
         return EMPTY;
       }), 
       tap(() => {
+        this.isLoading = false;
         this.router.navigate(['/login']);
       })
     );
   }
 
   login (data: Login): Observable<any> {
+    this.isLoading = true;
     return this.http.post(AuthService.LOCALHOST+"/auth/login", data, this.CONTEXT)
       .pipe(
         catchError(error => {
         if (error.status === 401) {
           console.error('Invalid credentials');
         }
+        this.isLoading = false;
         return EMPTY;
       }),
       tap(data => {
         const loginSuccessData = data as LoginSuccess;
         this.stockTokens(loginSuccessData);
+        this.isLoading = false;
         this.router.navigate(['/dashboard']);
       })
     )

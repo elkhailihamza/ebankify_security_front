@@ -1,9 +1,8 @@
 import { Component, DestroyRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { catchError, EMPTY, tap } from 'rxjs';
-import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  isLoading = false;
 
   constructor(
     private readonly formBuilder: FormBuilder, 
@@ -28,14 +28,21 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.isLoading = true;
+
     if (this.registerForm.valid) {
       const data = this.registerForm.value;
       this.auth
         .register(data)
         .pipe(
-          takeUntilDestroyed(this.destroyRef)
+          takeUntilDestroyed(this.destroyRef),
+          finalize(() => {
+            this.isLoading = false;
+          })
         )
         .subscribe();
     }
+
+    this.isLoading = false;
   }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Login } from '../interfaces/login';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isLoading = false;
 
   constructor(
     private readonly auth: AuthService, 
@@ -24,14 +26,19 @@ export class LoginComponent {
     }
 
     onSubmit() {
+      this.isLoading = true;
       if (!this.loginForm.valid) {
+        this.isLoading = false;
         return;
       }
 
       const data = this.loginForm.value as Login;
       this.auth.login(data)
       .pipe(
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isLoading = false;
+        })
       ).subscribe();
     }
 }

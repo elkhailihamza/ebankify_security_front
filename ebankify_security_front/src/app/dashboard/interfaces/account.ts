@@ -9,6 +9,6 @@ export interface AccountDetails {
     createdAt: string;
 };
 
-export interface DeleteAccount {
+export interface SelectAccount {
     accountNumber: string;
 };

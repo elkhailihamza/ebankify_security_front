@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AccountIndexComponent } from './account-index/account-index.component';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountRouterModule } from './account-router.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from './account.service';
 
 @NgModule({
@@ -14,7 +14,8 @@ import { AccountService } from './account.service';
   imports: [
     CommonModule,
     AccountRouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     AccountService
