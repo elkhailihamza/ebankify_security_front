@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../account.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountDetails, CreateAccount, SelectAccount } from '../../interfaces/account';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -14,19 +14,16 @@ export class AccountIndexComponent {
   createForm: FormGroup;
   accountNumber: string = '';
 
-  constructor(private account: AccountService, private formBuilder: FormBuilder) {
+  constructor(private account: AccountService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.createForm = this.formBuilder.group({
       customName: '',
     });
   }
 
   ngOnInit(): void {
-    this.account.viewOwnAccounts().subscribe(
-      (data) => {
-        this.accounts = data as AccountDetails[];
-      }
-    );
+    this.accounts = this.route.snapshot.data['accounts'] as AccountDetails[];
   }
+
 
   createAccount() {
     const data = this.createForm.value as CreateAccount;

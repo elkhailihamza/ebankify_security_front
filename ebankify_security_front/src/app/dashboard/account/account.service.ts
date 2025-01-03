@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, EMPTY, Observable, tap } from 'rxjs';
-import { CreateAccount, SelectAccount } from '../interfaces/account';
+import { AccountDetails, CreateAccount, SelectAccount } from '../interfaces/account';
+import { defaultResponse } from '../../interface/default';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AccountService {
   constructor(private http: HttpClient) { }
 
   viewOwnAccounts(): Observable<any> {
-    return this.http.get("http://localhost:8082/accounts/")
+    return this.http.get<AccountDetails[]>("http://localhost:8082/accounts/")
     .pipe(
       catchError(error => {
         console.log(error.error.message);
@@ -41,11 +42,8 @@ export class AccountService {
   }
 
   deleteAccount(data: SelectAccount): Observable<any> {
-    return this.http.delete("http://localhost:8082/accounts/"+data.accountNumber+"/delete")
+    return this.http.delete<defaultResponse>("http://localhost:8082/accounts/"+data.accountNumber+"/delete")
     .pipe (
-      tap(() => {
-        window.location.reload();
-      }),
       catchError(error => {
         console.log(error);
         return EMPTY;

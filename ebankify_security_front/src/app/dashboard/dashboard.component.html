@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<div class="dashboard-layout overflow-hidden h-screen">
+    <app-navbar class="h-auto"></app-navbar>
+    <main class="flex h-full">
+        <app-sidebar class="h-full"></app-sidebar>
+        <div class="w-full p-2 h-full">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>
