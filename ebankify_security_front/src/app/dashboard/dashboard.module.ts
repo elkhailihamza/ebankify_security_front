@@ -14,6 +14,6 @@ import { SidebarComponent } from "./layout/sidebar/sidebar.component";
   imports: [
     DashboardRoutingModule,
     CommonModule
-],
+  ],
 })
 export class DashboardModule { }

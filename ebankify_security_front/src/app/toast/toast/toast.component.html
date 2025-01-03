@@ -1,0 +1,3 @@
+<div *ngIf="toastMessage" [ngClass]="{'success-toast': toastMessage.method === 'success', 'error-toast': toastMessage.method === 'error'}" class="toast-notification">
+    <p>{{ toastMessage.message }}</p>
+</div>

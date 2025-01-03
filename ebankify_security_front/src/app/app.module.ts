@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { authInterceptor } from './auth/auth.interceptor';
 import { CommonModule } from '@angular/common';
+import { ToastService } from './toast/toast.service';
+import { ToastComponent } from './toast/toast/toast.component';
 
 
 
@@ -17,6 +19,7 @@ export const fetchToken = () => {
 @NgModule({
   declarations: [
     AppComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ export const fetchToken = () => {
     }),
   ],
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor]))
+    provideHttpClient(withInterceptors([authInterceptor])),
+    ToastService
   ],
   bootstrap: [AppComponent],
 })

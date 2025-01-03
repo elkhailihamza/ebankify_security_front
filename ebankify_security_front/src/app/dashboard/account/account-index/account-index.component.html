@@ -1,7 +1,7 @@
 <section>
-    <div class="relative overflow-x-auto" *ngIf="accounts.length > 0; else noAccounts">
+    <div class="relative mb-2 max-h-[30em] overflow-y-auto" *ngIf="accounts.length > 0; else noAccounts">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 z-10">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         Account number
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b" *ngFor="let account of accounts">
+                <tr class="bg-white border-b select-none hover:cursor-pointer hover:bg-gray-50 transition-all" *ngFor="let account of accounts">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {{ account.accountNumber }}
                     </th>
@@ -29,23 +29,24 @@
                         {{ account.balance }} dh
                     </td>
                     <td class="px-6 py-4">
-                        <form (ngSubmit)="deleteAccount({ accountNumber: account.accountNumber})">
+                        <form (ngSubmit)="deleteAccount({ accountNumber: account.accountNumber })">
                             <button type="submit" class="bg-red-600 text-white p-2 rounded">delete</button>
                         </form>
                     </td>
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div>    
     <ng-template #noAccounts>
         <p>No accounts available.</p>
     </ng-template>
     
-    <form [formGroup]="createForm" (ngSubmit)="createAccount()">
-        <input formControlName="customName" placeholder="custom name" />
-        <button type="submit" class="p-2 bg-gray-500">Create new account</button>
+    <form class="flex justify-center gap-2" [formGroup]="createForm" (ngSubmit)="createAccount()">
+        <input class="p-2 border-2 border-black rounded shadow" formControlName="customName" placeholder="Custom Name" />
+        <button type="submit" class="p-2 bg-blue-600 hover:bg-blue-800 transition-all text-center rounded flex justify-center items-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
     </form>
-    
   </section>
 
   
