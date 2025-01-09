@@ -1,1 +1,7 @@
-<p>account-details works!</p>
+<div *ngIf="account != null; else accountNull">
+    <h2>{{account!.customName || 'EMPTY'}}</h2>
+</div>
+<ng-template #accountNull>
+   <p>Account not found!</p>
+</ng-template>
+

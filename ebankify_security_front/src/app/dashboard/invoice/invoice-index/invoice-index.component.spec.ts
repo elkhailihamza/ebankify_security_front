@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountCreateComponent } from './account-create.component';
+import { InvoiceIndexComponent } from './invoice-index.component';
 
-describe('AccountCreateComponent', () => {
-  let component: AccountCreateComponent;
-  let fixture: ComponentFixture<AccountCreateComponent>;
+describe('InvoiceIndexComponent', () => {
+  let component: InvoiceIndexComponent;
+  let fixture: ComponentFixture<InvoiceIndexComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccountCreateComponent]
+      imports: [InvoiceIndexComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AccountCreateComponent);
+    fixture = TestBed.createComponent(InvoiceIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

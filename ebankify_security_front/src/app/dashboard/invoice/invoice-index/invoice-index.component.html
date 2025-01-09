@@ -1,0 +1,15 @@
+<section class="p-8">
+    <div class="p-2">
+        <h2 class="text-4xl font-medium underline">Invoice list:</h2>
+    </div>
+    <div class="p-4">
+        <div *ngIf="invoices.length > 0; else noInvoices">
+            <ul *ngFor="let invoice of invoices">
+                <li>{{invoice.dueDate+" - "+invoice.dueDate}}</li>
+            </ul>
+        </div>
+        <ng-template #noInvoices>
+            <h2>No invoices found!</h2>
+        </ng-template>
+    </div>
+</section>

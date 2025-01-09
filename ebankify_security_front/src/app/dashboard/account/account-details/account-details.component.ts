@@ -10,9 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AccountDetailsComponent {
   account: AccountFullDetails | null = null;
 
-  constructor(private router: ActivatedRoute) {
-
-  }
+  constructor(private router: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.account = this.router.snapshot.data['account'];

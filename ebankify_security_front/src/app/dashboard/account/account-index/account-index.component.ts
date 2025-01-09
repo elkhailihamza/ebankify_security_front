@@ -15,7 +15,7 @@ export class AccountIndexComponent {
   createForm: FormGroup;
   accountNumber: string = '';
 
-  constructor(private account: AccountService, private formBuilder: FormBuilder, private route: ActivatedRoute, private toast: ToastService) {
+  constructor(private account: AccountService, private formBuilder: FormBuilder, private route: ActivatedRoute, private toast: ToastService, private router: Router) {
     this.createForm = this.formBuilder.group({
       customName: '',
     });
@@ -43,5 +43,9 @@ export class AccountIndexComponent {
         window.location.reload();
       }
     )
+  }
+
+  redirectTo(accountNumber: string): void {
+    this.router.navigate([`/dashboard/account/${accountNumber}`])
   }
 }

@@ -4,7 +4,6 @@ import {AuthService} from "./auth.service";
 import {catchError, switchMap} from "rxjs/operators";
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { LoginResponse } from './interfaces/login';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);

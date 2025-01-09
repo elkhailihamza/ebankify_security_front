@@ -22,8 +22,8 @@ export class AccountService {
     );
   }
 
-  viewCertainAccount(data: SelectAccount): Observable<any> {
-    return this.http.get("http://localhost:8082/accounts/"+data.accountNumber+"/view")
+  viewCertainAccount(accountNumber: string): Observable<any> {
+    return this.http.get(`http://localhost:8082/accounts/${accountNumber}/view`)
     .pipe(
       catchError(error => {
         this.toast.fire("error", error.error.message);
