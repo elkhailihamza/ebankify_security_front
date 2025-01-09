@@ -7,12 +7,14 @@ import { User } from './interfaces/user';
 import { Login, LoginResponse, LoginSuccess } from './interfaces/login';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IS_PUBLIC } from './auth.interceptor';
+import { ToastService } from '../toast/toast.service';
+import { JwtUtilService } from '../util/jwt-util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private static readonly LOCALHOST = "http://localhost:8082";
+  private static readonly LOCALHOST = "http://localhost:8082/auth";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
   private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
   isLoading = false;
@@ -20,34 +22,40 @@ export class AuthService {
   constructor(private readonly http: HttpClient, 
     private readonly router: Router, 
     private readonly jwtHelper: JwtHelperService, 
-    private readonly destroyRef: DestroyRef) { }
+    private readonly destroyRef: DestroyRef,
+    private readonly toast: ToastService,
+    private readonly jwtUtil: JwtUtilService) { }
 
   get user(): WritableSignal<User | null> {
     const token = localStorage.getItem('token');
+    if (!this.jwtUtil.isJwtValid(token!) && token) {
+      localStorage.setItem('token', '');
+      return signal(null);
+    }
     return signal(token ? this.jwtHelper.decodeToken(token) : null);
   }
 
   register(data: any): Observable<any> {
     this.isLoading = true;
-    return this.http.post<LoginResponse>(AuthService.LOCALHOST+"/auth/register", data)
+    return this.http.post<LoginResponse>(AuthService.LOCALHOST+"/register", data)
     .pipe(
       catchError(error => {
         if (error.status === 409) {
-          console.log("Email already in use");
+          this.toast.fire("error", "Email already in use");
         }
         this.isLoading = false;
         return EMPTY;
       }), 
       tap(() => {
         this.isLoading = false;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
       })
     );
   }
 
   login (data: Login): Observable<any> {
     this.isLoading = true;
-    return this.http.post(AuthService.LOCALHOST+"/auth/login", data, this.CONTEXT)
+    return this.http.post(AuthService.LOCALHOST+"/login", data, this.CONTEXT)
       .pipe(
         catchError(error => {
         if (error.status === 401) {
@@ -84,11 +92,12 @@ export class AuthService {
   refreshToken(): Observable<LoginResponse | null> {
     const refresh_token = localStorage.getItem('refresh_token');
     if (!refresh_token) {
+      location.reload();
       return EMPTY;
     }
 
     return this.http.post<LoginResponse>(
-      AuthService.LOCALHOST+"/token/refresh", {refresh_token}, this.CONTEXT)
+      AuthService.LOCALHOST+"/token/refresh", {refreshToken: refresh_token}, this.CONTEXT)
       .pipe(
         catchError(() => EMPTY),
         tap(data => {
@@ -100,7 +109,11 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !this.jwtHelper.isTokenExpired();
+    const token = localStorage.getItem('token');
+    if (token && this.jwtUtil.isJwtValid(token!)) {
+      return !this.jwtHelper.isTokenExpired();
+    }
+    return false;
   }
 
   scheduleTokenRefresh(token: string): void {

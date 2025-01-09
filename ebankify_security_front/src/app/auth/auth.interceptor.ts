@@ -1,13 +1,19 @@
 import {HttpContextToken, HttpInterceptorFn, HttpRequest} from '@angular/common/http';
 import {inject} from "@angular/core";
 import {AuthService} from "./auth.service";
-import {switchMap} from "rxjs/operators";
+import {catchError, switchMap} from "rxjs/operators";
+import { Router } from '@angular/router';
+import { EMPTY } from 'rxjs';
+import { LoginResponse } from './interfaces/login';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
+  const router = inject(Router);
+  
   if (req.context.get(IS_PUBLIC)) {
     return next(req);
   }
+
   if (auth.isAuthenticated()) {
     const authRequest = addAuthorizationHeader(req);
     return next(authRequest);
@@ -16,6 +22,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       switchMap(() => {
         const authRequest = addAuthorizationHeader(req);
         return next(authRequest);
+      }),
+      catchError(() => {
+        router.navigate(['/auth/login']);
+        return EMPTY;
       })
     );
   }

@@ -18,7 +18,7 @@ import { AccountService } from './account.service';
     FormsModule,
   ],
   providers: [
-    AccountService
+    AccountService,
   ]
 })
 export class AccountModule { }

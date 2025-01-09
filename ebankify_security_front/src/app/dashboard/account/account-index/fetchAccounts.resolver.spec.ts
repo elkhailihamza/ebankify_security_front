@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
-import { accountResolver } from './account.resolver';
-import { AccountDetails } from '../interfaces/account';
+import { fetchAccountsResolver } from './fetchAccounts.resolver';
+import { AccountDetails } from '../../interfaces/account';
 
-describe('accountResolver', () => {
+describe('fetchAccounts', () => {
   const executeResolver: ResolveFn<AccountDetails[]> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => accountResolver(...resolverParameters));
+      TestBed.runInInjectionContext(() => fetchAccountsResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
