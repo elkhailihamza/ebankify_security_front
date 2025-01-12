@@ -5,7 +5,7 @@
     <div class="p-4">
         <div *ngIf="invoices.length > 0; else noInvoices">
             <ul *ngFor="let invoice of invoices">
-                <li>{{invoice.dueDate+" - "+invoice.dueDate}}</li>
+                <li>{{getFormattedDate(invoice.dueDate)+" - "+invoice.amountDue+" dh"}}</li>
             </ul>
         </div>
         <ng-template #noInvoices>

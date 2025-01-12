@@ -1,0 +1,28 @@
+<section class="p-8">
+    <div class="p-4">
+        <div class="p-2 mb-4">
+            <h2 class="text-2xl text-medium">Invoice</h2>
+        </div>
+        <div class="p-2">
+            <div class="text-center p-2 m-4 text-xl">
+                <h3>Create new Invoice</h3>
+            </div>
+            <form [formGroup]="invoiceCreate" (ngSubmit)="onSubmit()" class="grid place-items-center">
+                <div class="w-[20em] min-w-[10em] max-w-[30em]">
+                    <div class="mb-2">
+                        <input formControlName="amountDue" class="p-2 shadow border-b-2 focus:border-black transition-all outline-none w-full" placeholder="Amount due" />
+                    </div>
+                    <div class="mb-2">
+                        <input formControlName="dueDate" type="datetime-local" class="p-2 shadow border-b-2 focus:border-black transition-all outline-none w-full" placeholder="Due date" />
+                    </div>
+                    <div class="mb-2">
+                        <input formControlName="owner_id" class="p-2 shadow border-b-2 focus:border-black transition-all outline-none w-full" placeholder="Victim Id" />
+                    </div>
+                    <div>
+                        <button type="submit" class="bg-gray-200 hover:bg-blue-600 hover:text-white focus:bg-blue-800 transition-all p-2 rounded-sm">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

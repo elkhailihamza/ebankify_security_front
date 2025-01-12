@@ -20,4 +20,14 @@ export class InvoiceService {
       }),
     )
   }
+
+  sendInvoice(data: invoice): Observable<any> {
+    return this.http.post<invoice>("http://localhost:8082/invoice/create", data)
+    .pipe(
+      catchError((error) => {
+        this.toast.fire("error", error.error.message);
+        return EMPTY;
+      })
+    )
+  }
 }
