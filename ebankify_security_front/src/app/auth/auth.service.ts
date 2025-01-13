@@ -16,7 +16,7 @@ import { JwtUtilService } from '../util/jwt-util.service';
 export class AuthService {
   private readonly BASE_URL = "auth";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
-  private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
+  private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 10080;
   isLoading = false;
 
   constructor(private readonly http: HttpClient, 
