@@ -9,6 +9,7 @@ import { authInterceptor } from './auth/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { ToastService } from './toast/toast.service';
 import { ToastComponent } from './toast/toast/toast.component';
+import { httpInterceptor } from './http/http.interceptor';
 
 
 
@@ -34,7 +35,9 @@ export const fetchToken = () => {
     }),
   ],
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withInterceptors([authInterceptor, httpInterceptor])
+    ),
     ToastService
   ],
   bootstrap: [AppComponent],

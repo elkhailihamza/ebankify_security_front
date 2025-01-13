@@ -1,0 +1,58 @@
+<section class="p-8 h-screen">
+    <div>
+        <h2 class="text-2xl font-mediumunderline">Transactions</h2>
+    </div>
+    <div class="grid grid-rows-[0.25fr,1fr] gap-4 w-full p-2 h-screen">
+        <div class="grid grid-cols-2 gap-4 p-2 border-b">
+            <div class="flex flex-col justify-between border-r">
+                <h2 class="text-xl">Add a new transaction</h2>
+                <div>
+                    <button class="p-2 shadow border-b-2 focus:border-black hover:border-black transition-all outline-none select-none">Create Transaction</button>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-lg">Recent Transactions</h2>
+            </div>
+        </div>
+    
+        <div class="p-4">
+            <div *ngIf="transactions.length > 0; else noTransactions">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Account number
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Account sender
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Account receiver
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b select-none hover:cursor-pointer hover:bg-gray-50 transition-all">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            </th>
+                            <td class="px-6 py-4">
+                            </td>
+                            <td class="px-6 py-4">
+                            </td>
+                            <td class="px-6 py-4">
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ng-template #noTransactions>
+                <h2>No transactions found!</h2>
+            </ng-template>
+        </div>
+    </div>
+    
+</section>

@@ -13,7 +13,7 @@ export class AccountService {
   constructor(private http: HttpClient, private toast: ToastService) { }
 
   viewOwnAccounts(): Observable<any> {
-    return this.http.get<AccountDetails[]>("http://localhost:8082/accounts/")
+    return this.http.get<AccountDetails[]>("accounts/")
     .pipe(
       catchError(error => {
         this.toast.fire("error", error.error.message);
@@ -23,7 +23,7 @@ export class AccountService {
   }
 
   viewCertainAccount(accountNumber: string): Observable<any> {
-    return this.http.get(`http://localhost:8082/accounts/${accountNumber}/view`)
+    return this.http.get(`accounts/${accountNumber}/view`)
     .pipe(
       catchError(error => {
         this.toast.fire("error", error.error.message);
@@ -33,7 +33,7 @@ export class AccountService {
   }
 
   createAccount(data: CreateAccount): Observable<any> {
-    return this.http.post("http://localhost:8082/accounts/create", data)
+    return this.http.post("accounts/create", data)
     .pipe(
       catchError(error => {
         this.toast.fire("error", error.error.message);
@@ -43,7 +43,7 @@ export class AccountService {
   }
 
   deleteAccount(data: SelectAccount): Observable<any> {
-    return this.http.delete<defaultResponse>("http://localhost:8082/accounts/"+data.accountNumber+"/delete")
+    return this.http.delete<defaultResponse>("accounts/"+data.accountNumber+"/delete")
     .pipe (
       catchError(error => {
         this.toast.fire("error", error.error.message);

@@ -14,7 +14,7 @@ import { JwtUtilService } from '../util/jwt-util.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private static readonly LOCALHOST = "http://localhost:8082/auth";
+  private readonly BASE_URL = "auth";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
   private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
   isLoading = false;
@@ -37,7 +37,7 @@ export class AuthService {
 
   register(data: any): Observable<any> {
     this.isLoading = true;
-    return this.http.post<LoginResponse>(AuthService.LOCALHOST+"/register", data)
+    return this.http.post<LoginResponse>(`${this.BASE_URL}/register`, data)
     .pipe(
       catchError(error => {
         if (error.status === 409) {
@@ -55,7 +55,7 @@ export class AuthService {
 
   login (data: Login): Observable<any> {
     this.isLoading = true;
-    return this.http.post(AuthService.LOCALHOST+"/login", data, this.CONTEXT)
+    return this.http.post(`${this.BASE_URL}/login`, data, this.CONTEXT)
       .pipe(
         catchError(error => {
         if (error.status === 401) {
@@ -68,7 +68,7 @@ export class AuthService {
         const loginSuccessData = data as LoginSuccess;
         this.stockTokens(loginSuccessData);
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/home']);
       })
     )
   }
@@ -97,7 +97,7 @@ export class AuthService {
     }
 
     return this.http.post<LoginResponse>(
-      AuthService.LOCALHOST+"/token/refresh", {refreshToken: refresh_token}, this.CONTEXT)
+      "/token/refresh", {refreshToken: refresh_token}, this.CONTEXT)
       .pipe(
         catchError(() => EMPTY),
         tap(data => {
