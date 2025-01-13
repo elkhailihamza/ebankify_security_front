@@ -1,18 +1,54 @@
-<nav class="p-4 shadow z-40">
+<nav class="p-4 shadow z-50">
     <div class="p-2 flex justify-between items-center">
-        <div class="text-center">
-            <h2 class="text-xl">test</h2>
+      <div class="text-center">
+        <h2 class="text-xl select-none">eBankify™</h2>
+      </div>
+      <div>
+        <div class="relative inline-block text-left" x-data="{ dropdown_open: false }">
+          <div>
+            <button 
+              x-on:click="dropdown_open = !dropdown_open" 
+              type="button" 
+              class="inline-flex group w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-all" 
+              id="menu-button" 
+              aria-expanded="true" 
+              aria-haspopup="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line class="transform transition-all" x1="3" y1="6" x2="21" y2="6"
+                    x-bind:class="dropdown_open ? 'translate-x-1' : 'translate-x-0 group-hover:translate-x-0.5'"
+                ></line>
+
+                <line class="transform transition-all" x1="3" y1="18" x2="21" y2="18"
+                    x-bind:class="dropdown_open ? 'translate-x-2' : 'translate-x-0 group-hover:translate-x-1'"
+                ></line>
+            </svg>
+            </button>
+          </div>
+  
+          <div 
+            x-show="dropdown_open" 
+            class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none" 
+            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95"
+            x-on:click.away="dropdown_open = false" 
+            role="menu" 
+            aria-orientation="vertical" 
+            aria-labelledby="menu-button" 
+            tabindex="-1">
+            <div class="py-1" role="none">
+              <!-- Menu Items -->
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all" role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all" role="menuitem" tabindex="-1" id="menu-item-2">License</a>
+            </div>
+          </div>
         </div>
-        <ul class="">
-            <li class="inline mx-4 px-2">
-                <a>test</a>
-            </li>
-            <li class="inline mx-4 px-2">
-                <a>est</a>
-            </li>
-            <li class="inline mx-4 px-2">
-                <a>st</a>
-            </li>
-        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
+  
