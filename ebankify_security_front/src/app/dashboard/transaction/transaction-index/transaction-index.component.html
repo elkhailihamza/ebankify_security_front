@@ -21,7 +21,10 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 z-10">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                Account number
+                                Transaction id
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Transaction type
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Account sender
@@ -35,15 +38,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b select-none hover:cursor-pointer hover:bg-gray-50 transition-all">
+                        <tr *ngFor="let transaction of transactions" class="bg-white border-b select-none">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {{transaction.id}}
                             </th>
                             <td class="px-6 py-4">
+                                {{transaction.type}}
+                            </td>
+                            <td [routerLink]="['/dashboard/account', transaction.sourceAccountNumber]" class="px-6 py-4 hover:cursor-pointer hover:underline hover:bg-gray-100">
+                                {{transaction.sourceAccountNumber}}
+                            </td>
+                            <td [routerLink]="['/dashboard/account', transaction.destinationAccountNumber]" class="px-6 py-4 hover:cursor-pointer hover:underline hover:bg-gray-100">
+                                {{transaction.destinationAccountNumber}}
                             </td>
                             <td class="px-6 py-4">
-                            </td>
-                            <td class="px-6 py-4">
-                                
+                                {{transaction.amount}}
                             </td>
                         </tr>
                     </tbody>

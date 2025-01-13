@@ -1,1 +1,23 @@
-<p>transaction-create works!</p>
+<section class="p-8">
+    <div class="p-4">
+        <div class="text-center p-2">
+            <h2>Transaction Create</h2>
+        </div>
+        <div class="flex justify-center p-2">
+            <form [formGroup]="transactionCreate" (ngSubmit)="onSubmit()" class="grid max-w-[400px] w-[375px]">
+                <div class="mb-4">
+                    <input formControlName="sourceAccountNumber" class="p-2 w-full shadow border-b-2 focus:border-black hover:border-gray-300 transition-all outline-none" placeholder="Source account num">
+                </div>
+                <div class="mb-4">
+                    <input formControlName="destinationAccountNumber" class="p-2 w-full shadow border-b-2 focus:border-black hover:border-gray-300 transition-all outline-none" placeholder="Destination account num">
+                </div>
+                <div class="mb-4">
+                    <input formControlName="amount" class="p-2 w-full shadow border-b-2 focus:border-black hover:border-gray-300 transition-all outline-none" placeholder="Amount">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="p-2 shadow border-b-2 focus:border-black hover:border-black transition-all">Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
