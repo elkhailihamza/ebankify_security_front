@@ -16,7 +16,7 @@ import { JwtUtilService } from '../util/jwt-util.service';
 export class AuthService {
   private readonly BASE_URL = "auth";
   private readonly CONTEXT = {context: new HttpContext().set(IS_PUBLIC, true)};
-  private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 10080;
+  private readonly TOKEN_EXPIRY_THRESHOLD_MINUTES = 5;
   isLoading = false;
 
   constructor(private readonly http: HttpClient, 
@@ -37,7 +37,7 @@ export class AuthService {
 
   register(data: any): Observable<any> {
     this.isLoading = true;
-    return this.http.post<LoginResponse>(`${this.BASE_URL}/register`, data)
+    return this.http.post<LoginResponse>(`${this.BASE_URL}/register`, data, this.CONTEXT)
     .pipe(
       catchError(error => {
         if (error.status === 409) {
@@ -55,7 +55,7 @@ export class AuthService {
 
   login (data: Login): Observable<any> {
     this.isLoading = true;
-    return this.http.post(`${this.BASE_URL}/login`, data, this.CONTEXT)
+    return this.http.post<LoginResponse>(`${this.BASE_URL}/login`, data, this.CONTEXT)
       .pipe(
         catchError(error => {
         if (error.status === 401) {
@@ -67,6 +67,7 @@ export class AuthService {
       tap(data => {
         const loginSuccessData = data as LoginSuccess;
         this.stockTokens(loginSuccessData);
+        this.scheduleTokenRefresh(loginSuccessData.token);
         this.isLoading = false;
         this.router.navigate(['/dashboard/home']);
       })
@@ -96,8 +97,7 @@ export class AuthService {
       return EMPTY;
     }
 
-    return this.http.post<LoginResponse>(
-      "/token/refresh", {refreshToken: refresh_token}, this.CONTEXT)
+    return this.http.post<LoginResponse>(`${this.BASE_URL}/token/refresh`, {refreshToken: refresh_token}, this.CONTEXT)
       .pipe(
         catchError(() => EMPTY),
         tap(data => {

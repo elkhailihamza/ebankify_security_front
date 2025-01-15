@@ -42,9 +42,10 @@
             tabindex="-1">
             <div class="py-1" role="none">
               <!-- Menu Items -->
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all" role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all" role="menuitem" tabindex="-1" id="menu-item-2">License</a>
+              <a [routerLink]="'/auth/logout'" class="block flex gap-4 px-4 py-2 text-sm text-gray-700 hover:bg-red-500 group cursor-pointer focus:bg-red-700 transition-all" role="menuitem" tabindex="-1" id="menu-item-0">
+                <svg class="group-hover:stroke-white transition-all" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3H6a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h4M16 17l5-5-5-5M19.8 12H9"/></svg>
+                <span class="font-medium group-hover:text-white transition-all">Logout</span>
+              </a>
             </div>
           </div>
         </div>
