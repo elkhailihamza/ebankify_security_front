@@ -30,4 +30,27 @@ export class TransactionService {
       })
     )
   }
+
+  fetchImportantTransactions(): Observable<any> {
+    return this.http.get<transaction[]>(`${this.BASE_URL}/important/all`)
+    .pipe(
+      catchError((err) => {
+        const errorMessage = err.error?.message || 'An unknown error occurred';
+        this.toast.fire('error', errorMessage);
+        return EMPTY;
+      })
+    )
+  }
+
+  acceptOrDenyTransaction(data: transaction, acceptOrDeny: boolean): Observable<any> {
+    const acceptOrDenyString = acceptOrDeny ? "accept" : "reject";
+    return this.http.post<void>(`${this.BASE_URL}/${data.id}/${acceptOrDenyString}`, null)
+    .pipe(
+      catchError((err) => {
+        const errMsg = err.error?.message || "An error has occurred";
+        this.toast.fire("error", errMsg);
+        return EMPTY;
+      })
+    )
+  }
 }

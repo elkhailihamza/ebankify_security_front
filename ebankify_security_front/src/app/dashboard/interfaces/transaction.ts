@@ -1,7 +1,8 @@
 export interface transaction {
-    id: string;
-    type: string;
-    amount: string;
-    sourceAccountNumber: string;
-    destinationAccountNumber: string;
+    id?: string;
+    type?: string;
+    amount?: string;
+    status?: string;
+    sourceAccountNumber?: string;
+    destinationAccountNumber?: string;
 }

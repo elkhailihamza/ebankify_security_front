@@ -1,0 +1,79 @@
+<section class="p-8">
+    <div class="p-4">
+        <div class="p-2 mb-4">
+            <h2 class="text-2xl font-medium">Important Transactions</h2>
+        </div>
+        <div class="p-2">
+            <div *ngIf="importantTransactions.length > 0; else noTransactions">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Transaction id
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Transaction type
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Account sender
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Account receiver
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Amount
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Status
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Controls
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let transaction of importantTransactions" class="bg-white border-b select-none">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {{transaction.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{transaction.type}}
+                            </td>
+                            <td [routerLink]="['/dashboard/account', transaction.sourceAccountNumber]" class="px-6 py-4 hover:cursor-pointer hover:underline hover:bg-gray-100">
+                                {{transaction.sourceAccountNumber}}
+                            </td>
+                            <td [routerLink]="['/dashboard/account', transaction.destinationAccountNumber]" class="px-6 py-4 hover:cursor-pointer hover:underline hover:bg-gray-100">
+                                {{transaction.destinationAccountNumber}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{transaction.amount}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{transaction.status}}
+                            </td>
+                            <td class="px-6 py-4 flex gap-2">
+                                <form (ngSubmit)="acceptTransaction(transaction.id!)">
+                                    <div class="group">
+                                        <button type="submit" class="p-2 bg-green-500 hover:bg-green-600 focus:bg-green-700 rounded transition-all">
+                                            <svg class="stroke-[#151515] group-hover:stroke-white transition-all" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </button>
+                                    </div>
+                                </form>
+                                <form (ngSubmit)="declineTransaction(transaction.id!)">
+                                    <div class="group">
+                                        <button type="submit" class="p-2 bg-red-500 hover:bg-red-600 focus:bg-red-700 rounded transition-all">
+                                            <svg class="stroke-[#151515] group-hover:stroke-white transition-all" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#151515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ng-template #noTransactions>
+                <h2>No transactions found!</h2>
+            </ng-template>
+        </div>
+    </div>
+</section>

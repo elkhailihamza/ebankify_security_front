@@ -1,10 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ToastService } from './toast/toast.service';
+import { ToastComponent } from './toast/toast/toast.component';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      declarations: [
+          AppComponent,
+          ToastComponent
+        ],
+        imports: [
+          CommonModule,
+          BrowserModule,
+          AppRoutingModule,
+          RouterModule,
+          HttpClientModule,
+        ],
+        providers: [
+          ToastService
+        ],
     }).compileComponents();
   });
 
@@ -18,12 +38,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('ebankify_security_front');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ebankify_security_front');
   });
 });

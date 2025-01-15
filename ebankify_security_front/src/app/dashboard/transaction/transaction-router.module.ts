@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TransactionIndexComponent } from './transaction-index/transaction-index.component';
 import { TransactionIndexResolver } from './transaction-index/transaction-index.resolver';
 import { TransactionCreateComponent } from './transaction-create/transaction-create.component';
+import { TransactionReviewComponent } from './transaction-review/transaction-review.component';
+import { transactionReviewResolver } from './transaction-review/transaction-review.resolver';
 
 const routes: Routes = [
   {
@@ -13,6 +15,11 @@ const routes: Routes = [
   {
     path: 'create',
     component: TransactionCreateComponent
+  },
+  {
+    path:'review',
+    component: TransactionReviewComponent,
+    resolve: {transaction: transactionReviewResolver}
   }
 ]
 

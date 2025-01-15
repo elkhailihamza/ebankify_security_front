@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RefreshComponent } from './refresh.component';
+import { HttpClientModule } from '@angular/common/http';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 describe('RefreshComponent', () => {
   let component: RefreshComponent;
@@ -8,7 +10,14 @@ describe('RefreshComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RefreshComponent]
+      declarations: [RefreshComponent],
+      imports: [
+        HttpClientModule
+      ],
+      providers: [
+        JwtHelperService,
+        { provide: JWT_OPTIONS, useValue: {} },
+      ]
     })
     .compileComponents();
     

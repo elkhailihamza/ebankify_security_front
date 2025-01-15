@@ -8,7 +8,7 @@ describe('Err404Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Err404Component]
+      declarations: [Err404Component]
     })
     .compileComponents();
     

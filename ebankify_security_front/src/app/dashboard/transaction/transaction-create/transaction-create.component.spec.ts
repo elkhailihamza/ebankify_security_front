@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionCreateComponent } from './transaction-create.component';
+import { CommonModule } from '@angular/common';
+import { DashboardRoutingModule } from '../../dashboard-routing.module';
+import { DashboardComponent } from '../../dashboard.component';
+import { NavbarComponent } from '../../layout/navbar/navbar.component';
+import { SidebarComponent } from '../../layout/sidebar/sidebar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('TransactionCreateComponent', () => {
   let component: TransactionCreateComponent;
@@ -8,7 +14,16 @@ describe('TransactionCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransactionCreateComponent]
+      declarations: [
+          DashboardComponent,
+          NavbarComponent,
+          SidebarComponent
+        ],
+        imports: [
+          DashboardRoutingModule,
+          CommonModule,
+          HttpClientModule
+        ],
     })
     .compileComponents();
     
