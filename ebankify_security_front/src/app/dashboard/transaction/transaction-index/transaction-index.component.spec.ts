@@ -14,7 +14,7 @@ describe('TransactionIndexComponent', () => {
   const transactions: transaction[] = [
     {
       id: '1',
-      amount: '2000',
+      amount: 2000,
       destinationAccountNumber: '123456',
       sourceAccountNumber: '123454',
       status: 'ACCEPTED',
@@ -22,7 +22,7 @@ describe('TransactionIndexComponent', () => {
     },
     {
       id: '2',
-      amount: '5000',
+      amount: 5000,
       destinationAccountNumber: '123456',
       sourceAccountNumber: '123454',
       status: 'PENDING',

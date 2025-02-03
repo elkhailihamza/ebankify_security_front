@@ -14,7 +14,7 @@ describe('TransactionReviewComponent', () => {
   let fixture: ComponentFixture<TransactionReviewComponent>;
   const transaction: transaction = {
     id: '1',
-    amount: '3000',
+    amount: 3000,
     destinationAccountNumber: '123456',
     sourceAccountNumber: '123454',
     status: 'ACCEPTED',

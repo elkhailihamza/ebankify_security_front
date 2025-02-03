@@ -6,9 +6,7 @@ import { TransactionIndexComponent } from './transaction-index/transaction-index
 import { ReactiveFormsModule } from '@angular/forms';
 import { TransactionCreateComponent } from './transaction-create/transaction-create.component';
 import { TransactionReviewComponent } from './transaction-review/transaction-review.component';
-import { RouterModule } from '@angular/router';
-
-
+import { _transactionsReducer } from '../../state/transaction-provider/reducer';
 
 @NgModule({
   declarations: [
@@ -19,7 +17,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     TransactionRouterModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     TransactionService

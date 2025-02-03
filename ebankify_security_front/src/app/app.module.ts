@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { ToastService } from './toast/toast.service';
 import { ToastComponent } from './toast/toast/toast.component';
 import { httpInterceptor } from './http/http.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { _transactionsReducer } from './state/transaction-provider/reducer';
 
 
 
@@ -33,6 +35,7 @@ export const fetchToken = () => {
         tokenGetter: fetchToken,
       }
     }),
+    StoreModule.forRoot({transactions: _transactionsReducer})
   ],
   providers: [
     provideHttpClient(
